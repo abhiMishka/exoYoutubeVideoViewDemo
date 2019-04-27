@@ -10,4 +10,8 @@
     <string name="video">Video</string>
     <string name="radio_player">Radio Player</string>
     <string name="video_player">Video Player</string>
+    <string name="youtube_player">Youtube Player</string>
+    <string name="video_id">DyYaQisC67A</string>
+    <string name="video_view">Video View</string>
+    <string name="video_url">http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4</string>
 </resources>

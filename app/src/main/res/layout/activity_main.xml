@@ -9,6 +9,7 @@
     tools:context="com.yusufcakmak.exoplayersample.MainActivity">
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btnRadioPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +22,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/video_player"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnYoutubePlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/youtube_player"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnVideoViewPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/video_view"
         android:textAllCaps="false" />
 
 </LinearLayout>

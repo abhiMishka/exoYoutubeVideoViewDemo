@@ -5,17 +5,16 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
-import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.activity_video_player.*
+
 
 class VideoPlayerActivity : Activity() {
 
@@ -36,11 +35,16 @@ class VideoPlayerActivity : Activity() {
 
     private fun initializePlayer() {
 
+        val bandwidthMeter = DefaultBandwidthMeter()
+        val userAgent = "locoExoPlayer"
+
+        val httpDataSourceFactory = DefaultHttpDataSourceFactory(userAgent, bandwidthMeter, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, true)
+
         trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
+        mediaDataSourceFactory = DefaultDataSourceFactory(this, bandwidthMeter, httpDataSourceFactory)
 
         val mediaSource = ExtractorMediaSource.Factory(mediaDataSourceFactory)
-                .createMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"))
+                .createMediaSource(Uri.parse(getString(R.string.video_url)))
 
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
 
@@ -50,12 +54,10 @@ class VideoPlayerActivity : Activity() {
             playWhenReady = true
         }
 
-
         playerView.setShutterBackgroundColor(Color.TRANSPARENT)
         playerView.player = player
         playerView.requestFocus()
         ivHideControllerButton.setOnClickListener { playerView.hideController() }
-
 
         lastSeenTrackGroupArray = null
     }
